@@ -1,26 +1,27 @@
-import { Button } from "@mui/material"
-import Link from 'next/link'
+import NavButton from "./components/navbutton";
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body>
         {/* Layout UI */}
-        <header style=
-        {{
-          backgroundColor :"darkgrey",
-          padding: "1rem" 
-          }}>
-            <Link href="/"><Button variant="contained">Home</Button></Link>
-            <Link href="/dashboard"><Button variant="contained">Dashboard</Button></Link>
-            </header>
+        <header
+          style={{
+            backgroundColor: "darkgrey",
+            padding: "1rem",
+          }}
+        >
+          <NavButton href="/" name="Home"></NavButton>
+          <NavButton href="/formation" name="Formation"></NavButton>
+          <NavButton href="/cours" name="Cours"></NavButton>
+        </header>
 
         <main>{children}</main>
       </body>
     </html>
-  )
+  );
 }
