@@ -1,4 +1,6 @@
+import NavBarHome from "./components/navbarHome";
 import NavButton from "./components/navbutton";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function RootLayout({
   children,
@@ -9,15 +11,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* Layout UI */}
-        <header
-          style={{
-            backgroundColor: "darkgrey",
-            padding: "1rem",
-          }}
-        >
-          <NavButton href="/" name="Home"></NavButton>
-          <NavButton href="/formation" name="Formation"></NavButton>
-          <NavButton href="/cours" name="Cours"></NavButton>
+        <header>
+          <NavBarHome />
         </header>
 
         <main>{children}</main>
