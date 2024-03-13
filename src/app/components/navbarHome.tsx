@@ -60,17 +60,19 @@ function OffcanvasExample() {
                   </NavDropdown>
                 </Nav>
                 <Form className="d-flex">
-                  <Form.Control
+                  {/* <Form.Control
                     type="search"
                     placeholder="Search"
                     className="me-2"
                     aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
+                  /> */}
+                  {/* <Button variant="outline-success">Search</Button> */}
+                  <input type="Search" placeholder="Search" />
                 </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
+          <Navbar.Brand href="/sell">Sell</Navbar.Brand>
         </Navbar>
       ))}
     </>
