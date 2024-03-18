@@ -4,9 +4,6 @@ export default function Page() {
     <div>
       <div>
         <h1>Page d'accueil</h1>
-        <CardArticle></CardArticle>
-        <CardArticle></CardArticle>
-        <CardArticle></CardArticle>
       </div>
     </div>
   );

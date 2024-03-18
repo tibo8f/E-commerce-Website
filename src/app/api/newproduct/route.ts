@@ -6,17 +6,7 @@ export async function POST(request: Request) {
 
     // Database interaction
     const prisma = new PrismaClient()
-    //     const user = await prisma.user.create({
-    //     data: {
-    //       name: 'Bob',
-    //       email: 'bobqsd@prisma.io',
-    //       posts: {
-    //         create: {
-    //           title: formData.title,
-    //         },
-    //       },
-    //     },
-    //   })
+
 
     const existingUser = await prisma.user.findUnique({
         where: {
@@ -25,7 +15,7 @@ export async function POST(request: Request) {
       });
       
       if (existingUser) {
-        const newPost = await prisma.post.create({
+        const newArticle = await prisma.article.create({
           data: {
             title: formData.title,
             authorId: existingUser.id,
@@ -33,7 +23,7 @@ export async function POST(request: Request) {
           },
         });
         
-        console.log('New post created:', newPost);
+        console.log('New article created:', newArticle);
       } else {
         console.log('User not found');
       }
@@ -41,7 +31,28 @@ export async function POST(request: Request) {
     // View what's inside the database
       const data = await prisma.user.findMany()     // Affiche les utilisateurs
       console.log(data)
-      const dataPost = await prisma.post.findMany() // Affiche les posts
-      console.log(dataPost)
+      const dataArticle = await prisma.article.findMany() // Affiche les posts
+      console.log(dataArticle)
     return Response.json(data)
 }
+
+
+
+export async function GET(request: Request) {
+  // Database interaction
+  const prisma = new PrismaClient()
+  
+  const allUsers = await prisma.user.findMany()
+  const allArticles = await prisma.article.findMany()
+  // console.log(allUsers)
+  console.log("GET Method was launch")
+  return Response.json(allArticles)
+}
+
+
+
+
+
+
+
+// Pour créer des articles par user

@@ -3,14 +3,22 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-function CardArticle() {
+type NProp = {
+  title: String;
+  content: String;
+  price: number;
+  user: String;
+};
+
+function CardArticle(props: NProp) {
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src="@/app//images/chaussuredessin.jpeg" />
       <Card.Body>
-        <Card.Title>Chaussure</Card.Title>
-        <Card.Text>La meilleure chaussure du marché !</Card.Text>
-        <Button variant="primary">23$</Button>
+        <Card.Title>{props.title}</Card.Title>
+        <Card.Text>{props.content}</Card.Text>
+        <Card.Text>{props.user}</Card.Text>
+        <Button variant="primary">{props.price}€</Button>
       </Card.Body>
     </Card>
   );

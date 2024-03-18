@@ -1,9 +1,11 @@
 "use client";
 
+import { identity } from "@fullcalendar/core/internal.js";
 import { useState } from "react";
 
 // Ligne ci dessous permet d'avoir de la cohérence entre les pages
 export type Item = {
+  id?: number;
   title: string;
   content: string;
 };
