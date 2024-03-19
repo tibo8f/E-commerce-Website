@@ -3,6 +3,13 @@
 import { identity } from "@fullcalendar/core/internal.js";
 import { useState } from "react";
 
+// import { cookies } from 'next/headers'
+
+// export async function getSessionData(req) {
+//   const encryptedSessionData = cookies().get('session')?.value
+//   return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData)) : null
+// }
+
 // Ligne ci dessous permet d'avoir de la cohérence entre les pages
 export type Item = {
   id?: number;

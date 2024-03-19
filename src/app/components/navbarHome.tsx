@@ -73,6 +73,7 @@ function OffcanvasExample() {
             </Navbar.Offcanvas>
           </Container>
           <Navbar.Brand href="/sell">Sell</Navbar.Brand>
+          <Navbar.Brand href="/login">Login</Navbar.Brand>
         </Navbar>
       ))}
     </>
