@@ -1,5 +1,7 @@
 "use client";
 
+import { useContext } from "react";
+import { UserContext } from "../layout";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
@@ -9,6 +11,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
 function OffcanvasExample() {
+  const { username, setUsername } = useContext(UserContext);
   return (
     <>
       {["md"].map((expand) => (
@@ -73,7 +76,11 @@ function OffcanvasExample() {
             </Navbar.Offcanvas>
           </Container>
           <Navbar.Brand href="/sell">Sell</Navbar.Brand>
-          <Navbar.Brand href="/login">Login</Navbar.Brand>
+          {username ? ( // Check if username exists
+            <Navbar.Brand>{username}</Navbar.Brand>
+          ) : (
+            <Navbar.Brand href="/login">Sign In</Navbar.Brand>
+          )}
         </Navbar>
       ))}
     </>

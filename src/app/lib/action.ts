@@ -1,5 +1,5 @@
 'use server'
-
+/// !!!!! VOIR /connection je suis en train de faire 2 fois la même page
 import signIn from '@/app/lib/authenticate'
 import { cookies } from 'next/headers'
 

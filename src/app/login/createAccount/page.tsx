@@ -3,6 +3,7 @@
 import { authenticate } from "@/app/lib/action";
 import { useFormState, useFormStatus } from "react-dom";
 import { useState } from "react";
+import Link from "next/link";
 
 export type User = {
   name: string;
@@ -52,7 +53,9 @@ export default function Page() {
           placeholder="Password"
           required
         />
-        <button onClick={submit}>Create user account</button>
+        <Link href="/login">
+          <button onClick={submit}>Create user account</button>
+        </Link>
       </form>
     </div>
   );

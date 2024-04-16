@@ -3,6 +3,9 @@
 import { identity } from "@fullcalendar/core/internal.js";
 import { useState } from "react";
 
+// Si la variable context utilisateur existe alors affiche de quoi créer un produit
+// Sinon demande de se connecter
+
 // import { cookies } from 'next/headers'
 
 // export async function getSessionData(req) {
@@ -10,26 +13,30 @@ import { useState } from "react";
 //   return encryptedSessionData ? JSON.parse(decrypt(encryptedSessionData)) : null
 // }
 
-// Ligne ci dessous permet d'avoir de la cohérence entre les pages
 export type Item = {
   id?: number;
   title: string;
   content: string;
+  price: number;
 };
 
 export default function Page() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [price, setPrice] = useState(0);
 
-  async function submit() {
+  async function submit(event: { preventDefault: () => void }) {
+    event.preventDefault();
     const data: Item = {
       title: title,
       content: description,
+      price: price,
     };
     const reponse = await fetch("/api/newproduct", {
       method: "POST",
       body: JSON.stringify(data),
     });
+
     const product = await reponse.json();
     console.log(product);
   }
@@ -49,6 +56,12 @@ export default function Page() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description"
+        />
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(parseFloat(e.target.value))}
+          placeholder="Price"
         />
         <button onClick={submit}>Submit</button>
       </form>
