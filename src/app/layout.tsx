@@ -1,5 +1,7 @@
 "use client";
 
+import "./globals.css";
+
 import NavBarHome from "./components/navbarHome";
 import NavButton from "./components/navbutton";
 import "bootstrap/dist/css/bootstrap.min.css";
