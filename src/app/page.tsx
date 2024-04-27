@@ -33,6 +33,7 @@ export default function Page() {
               content={item.content || ""}
               price={item.price}
               user={item.author.name || ""}
+              image={item.image || ""}
             ></CardArticle2>
           </div>
         ))}

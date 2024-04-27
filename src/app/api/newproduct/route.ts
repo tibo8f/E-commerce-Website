@@ -37,6 +37,7 @@ export async function POST(request: Request) {
             authorId: existingUser.id,
             content: formData.content,
             price: formData.price,
+            image: formData.image,
           },
         });
         

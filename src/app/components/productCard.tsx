@@ -3,6 +3,7 @@ type NProp = {
   content: String;
   price: number;
   user: String;
+  image: string;
 };
 
 export function CardArticle2(props: NProp) {
@@ -10,8 +11,7 @@ export function CardArticle2(props: NProp) {
     <>
       <div className="border rounded-md shadow-lg max-w-sm overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80"
-          //   src="@/app//images/chaussuredessin.jpeg"
+          src={props.image} // "images/avavav_boots.jpeg"
           alt="card-image"
           className="w-full"
         />
@@ -22,7 +22,7 @@ export function CardArticle2(props: NProp) {
           <div>${props.price}</div>
           <div className="pt-0">
             <button
-              className="bg-blue-gray-900/10 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               //   onClick={submit}
             >
               Add to Cart

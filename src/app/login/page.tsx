@@ -61,12 +61,14 @@ export default function Page() {
     <section className="bg-gray-50 min-h-screen flex items-center justify-center">
       <div
         className="
-      bg-gray-100 flex rounded-2x1 shadow-lg max-w-3x1 p-5
+        relative mx-auto w-full max-w-md bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:rounded-xl sm:px-10
       "
       >
         <div>
-          <h2 className="font-bold text-2x1 text-[#002D74]">Login</h2>
-          <p className="text-sm mt-4">If you already are a member, log in</p>
+          <h2 className="text-3xl font-semibold text-gray-900">Login</h2>
+          <p className="mt-2 text-gray-500">
+            Sign in below to access your account
+          </p>
           {/* <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Image
             alt="Logo"
@@ -78,7 +80,7 @@ export default function Page() {
         </div> */}
           <form action={dispatch} className="flex flex-col gap-4">
             <input
-              className="p-2 mt-8 rounded-x1 border"
+              className="p-2 mt-8 border rounded-md"
               type="email"
               placeholder="jane@example.com"
               value={email}
@@ -94,7 +96,7 @@ export default function Page() {
         /> */}
             <div className="relative">
               <input
-                className="p-2 rounded-x1 border w-full"
+                className="p-2 border rounded-md w-full"
                 type={type}
                 name="password"
                 placeholder="Password"
@@ -120,25 +122,40 @@ export default function Page() {
                 </svg>
               </span>
             </div>
-
-            <button
-              className="bg-[#002D74] rounded-x1 text-white py-2"
-              onClick={submit}
-            >
-              Login
-            </button>
+            <div className="my-6">
+              <button
+                type="submit"
+                onClick={submit}
+                className="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
+              >
+                Sign in
+              </button>
+            </div>
           </form>
           <div className="mt-3 text-xs flex justify-between">
-            <p>If you don't have an account..</p>
+            <p className="text-center text-sm text-gray-500">
+              Don&#x27;t have an account yet? &nbsp;
+              <a
+                href="#!"
+                onClick={() => {
+                  router.push("/login/createAccount");
+                }}
+                className="font-semibold text-gray-600 hover:underline focus:text-gray-800 focus:outline-none"
+              >
+                Sign up
+              </a>
+              .
+            </p>
+            {/* <p>If you don't have an account..</p>
 
             <button
               onClick={() => {
                 router.push("/login/createAccount");
               }}
-              className="py-2 px-5 bg-white border rounded-x1"
+              className="py-2 px-5 bg-white border rounded-md"
             >
               Register
-            </button>
+            </button> */}
           </div>
         </div>
       </div>
