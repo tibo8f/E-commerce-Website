@@ -1,5 +1,11 @@
-import { PrismaClient } from '@prisma/client'
-import type { Item } from '../../sell/page'
+
+
+
+import path from "path";
+import fs from "fs/promises";
+// import { storeImageDetails } from "./script.ts";
+import { useSearchParams } from "next/navigation.js";
+import { PrismaClient } from "@prisma/client";
 import { cookies } from 'next/headers'
 
 function extractEmailFromCookie(cookie: string): string | undefined {
@@ -10,48 +16,61 @@ function extractEmailFromCookie(cookie: string): string | undefined {
   return undefined
 }
 
+export const dynamic = "force-dynamic"; // defaults to auto
 export async function POST(request: Request) {
-    console.log('POST request');
-    // Get the json file with the form data filed on the front-end
-    const formData = await request.json() as Item
+  const formData = await request.formData();
+  console.log('Hello')
+  console.log(formData);
 
-    // Database interaction
-    const prisma = new PrismaClient()
+  const title = formData.get("title") as string;
+  const content = formData.get("content") as string;
+  const price = formData.get("price") as string;
+  const file = formData.get("file") as File;
+  const fileContent = Buffer.from(await file.arrayBuffer());
+  const hash = title // hasher le titre utiliser uui ou  un hashage pour que le titre soit sur d'etre correct et differents pour chaque fichier
 
-    const cookieStore = cookies()
-    const userEmailCookie = cookieStore.get('email')?.value
-    const userEmail = userEmailCookie ? extractEmailFromCookie(userEmailCookie) : undefined
-    console.log(userEmail);
+  const dir = "public/images/" + hash + ".jpg"; 
+  let filename = path.join(dir, file.name);
+  await fs.mkdir(dir, { recursive: true });
+  await fs.writeFile(filename, fileContent);
+  console.log(filename);
+  const [extension, ...name] = filename.split(".").reverse();
 
 
-    const existingUser = await prisma.user.findUnique({
-        where: {
-          email: userEmail, 
+  // Mettre en DB
+  const prisma = new PrismaClient()
+  const cookieStore = cookies()
+  const userEmailCookie = cookieStore.get('email')?.value
+  const userEmail = userEmailCookie ? extractEmailFromCookie(userEmailCookie) : undefined
+  console.log(userEmail);
+
+  const existingUser = await prisma.user.findUnique({
+      where: {
+        email: userEmail, 
+      },
+    });
+    
+    if (existingUser) {
+      const newArticle = await prisma.article.create({
+        data: {
+          title: title,
+          authorId: existingUser.id,
+          content: content,
+          price: parseInt(price),
+          image: filename.replace("public/", ""),
         },
       });
       
-      if (existingUser) {
-        const newArticle = await prisma.article.create({
-          data: {
-            title: formData.title,
-            authorId: existingUser.id,
-            content: formData.content,
-            price: formData.price,
-            image: formData.image,
-          },
-        });
-        
-        console.log('New article created:', newArticle);
-      } else {
-        console.log('User not found');
-      }
-      
-    // View what's inside the database
-      //const data = await prisma.user.findMany()     // Affiche les utilisateurs
-      //console.log(data)
-      const dataArticle = await prisma.article.findMany() // Affiche les posts
-      console.log(dataArticle)
-    return Response.json(dataArticle)
+      console.log('New article created:', newArticle);
+    } else {
+      console.log('User not found');
+    }
+    
+  // View what's inside the database
+    const dataArticle = await prisma.article.findMany() // Affiche les posts
+    console.log(dataArticle)
+
+  return Response.json({ title, file });
 }
 
 export async function getArticles() {
