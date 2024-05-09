@@ -1,3 +1,4 @@
+
 "use client";
 
 import { identity } from "@fullcalendar/core/internal.js";
@@ -32,6 +33,50 @@ export default function Page(this: any) {
     raw: "",
   });
 
+  async function submit(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    const data: Item = {
+      title: title,
+      content: description,
+      price: price,
+      image: imageSrc,
+    };
+    const reponse = await fetch("/api/newproduct", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    const product = await reponse.json();
+    console.log(product);
+  }
+
+  const handlePhotoChange = (e: any) => {
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      });
+      console.log("image : ", "test");
+      console.log(e.target.files[0]);
+    }
+  };
+
+  async function submitImage(event: { preventDefault: () => void }) {
+    event.preventDefault();
+    const formData = new FormData();
+    await formData.append("image", image.raw);
+    console.log("formdata ", formData);
+    console.log("image.raw ", image.raw);
+
+    const response = await fetch("/api/images", {
+      method: "POST",
+      // body: JSON.stringify(image.raw),
+      body: formData,
+    });
+    // const product = await response.json();
+    // console.log(product);
+  }
+
   return (
     <section className="bg-gray-50 min-h-screen flex items-center justify-center">
       <div
@@ -46,43 +91,71 @@ export default function Page(this: any) {
           <p className="mt-2 text-gray-500">blabla</p>
         </div>
 
-        <form
-          action="/api/newproduct"
-          method="post"
-          encType="multipart/form-data"
-        >
+        <form className="flex flex-col gap-4">
           <input
             type="text"
             value={title}
-            name="title"
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Article title"
           />
           <input
             type="text"
             value={description}
-            name="content"
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           />
           <input
             type="number"
             value={price}
-            name="price"
             onChange={(e) => setPrice(parseFloat(e.target.value))}
             placeholder="Price"
           />
-
-          <label htmlFor="image">
-            Sélectionner une image (JPG uniquement) :{" "}
-            <input
-              type="file"
-              id="image"
-              name="imageData"
-              accept=".jpg"
-            ></input>
+          <input
+            type="text"
+            value={imageSrc}
+            onChange={(e) => setImageSrc(e.target.value)}
+            placeholder="/images/image_name.png"
+          />
+          <input
+            name="image"
+            type="file"
+            id="upload-button"
+            style={{ display: "none" }}
+            onChange={handlePhotoChange}
+          />
+          <label htmlFor="upload-button">
+            {image.preview ? (
+              <img
+                src={image.preview}
+                alt="dummy"
+                width="300"
+                height="300"
+                className="my-10 mx-5"
+              />
+            ) : (
+              <>
+                <p className="text-black text-1xl w-full text-left">
+                  Upload Image
+                </p>
+                {/* <div className={style.wrapper} /> */}
+              </>
+            )}
           </label>
-          <input type="submit" value="Envoyer"></input>
+
+          <button
+            onClick={submit}
+            className="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            onClick={submitImage}
+            className="text-black w-full mt-2 border-[1px]
+             p-2 border-[#3d4f7c] rounded-full cursor-pointer "
+          >
+            Submit Image
+          </button>
         </form>
       </div>
     </section>

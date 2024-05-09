@@ -27,7 +27,7 @@ export default function Page() {
       <h1>Clothes most sold</h1>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         {jsonData.map((item) => (
-          <div key={item.id} style={{ flex: "0 0 33.33%", padding: "10px" }}>
+          <div key={item.id} style={{ flex: "0 0 20%", padding: "10px" }}>
             <CardArticle2
               title={item.title}
               content={item.content || ""}

@@ -27,12 +27,7 @@ export type Item = {
 export default function Page(this: any) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [imageSrc, setImageSrc] = useState("");
-  const [image, setImage] = useState({
-    preview: "",
-    raw: "",
-  });
+  const [price, setPrice] = useState(Number);
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -47,7 +42,6 @@ export default function Page(this: any) {
       method: "POST",
       body: formData,
     });
-    debugger;
   }
 
   return (
@@ -59,17 +53,18 @@ export default function Page(this: any) {
       >
         <div>
           <h2 className="text-3xl font-semibold text-gray-900">
-            Sell your products
+            Sell a product
           </h2>
-          <p className="mt-2 text-gray-500">blabla</p>
         </div>
 
         <form
+          className="flex flex-col gap-4"
           onSubmit={handleSubmit}
           method="post"
           encType="multipart/form-data"
         >
           <input
+            className="p-2 mt-8 border rounded-md"
             type="text"
             value={title}
             name="title"
@@ -77,6 +72,7 @@ export default function Page(this: any) {
             placeholder="Article title"
           />
           <input
+            className="p-2 border rounded-md w-full"
             type="text"
             value={description}
             name="content"
@@ -84,24 +80,73 @@ export default function Page(this: any) {
             placeholder="Description"
           />
           <input
+            className="p-2 border rounded-md w-full"
             type="number"
             value={price}
             name="price"
             onChange={(e) => setPrice(parseFloat(e.target.value))}
             placeholder="Price"
           />
+          <p className="mt-2 text-gray-500">Add an image to your product</p>
+          <div className="flex items-center justify-center w-full">
+            <label
+              htmlFor="dropzone-file"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+            >
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg
+                  className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 20 16"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                  />
+                </svg>
+                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                  <span className="font-semibold">Click to upload</span> or drag
+                  and drop
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  PNG, JPG
+                </p>
+              </div>
+              <input
+                ref={fileInput}
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                name="imageData"
+              />
+            </label>
+          </div>
 
-          <label htmlFor="image">
-            Sélectionner une image (JPG uniquement) :{" "}
+          {/* <label htmlFor="image">
+            
             <input
               ref={fileInput}
               type="file"
               id="image"
               name="imageData"
-              accept=".jpg"
+              accept=".jpg, .png"
             ></input>
-          </label>
-          <input type="submit" value="Envoyer"></input>
+          </label> */}
+          {/* <input type="submit" value="Send"></input> */}
+          <div className="my-6">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="w-full rounded-md bg-black px-3 py-4 text-white focus:bg-gray-600 focus:outline-none"
+            >
+              Sell product
+            </button>
+          </div>
         </form>
       </div>
     </section>

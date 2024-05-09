@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState } from "react";
 import { useContext } from "react";
 import { UserContext } from "../layout";
 import Button from "react-bootstrap/Button";
@@ -9,9 +10,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Tooltip from "react-bootstrap/Tooltip";
+import { OverlayTrigger } from "react-bootstrap";
 
 function OffcanvasExample() {
-  const { username, setUsername } = useContext(UserContext);
+  const { username, useremail } = useContext(UserContext);
+  const firstLetterUserName = username ? username[0].toUpperCase() : "";
+  const [showTooltip, setShowTooltip] = useState(false);
   return (
     <>
       {["md"].map((expand) => (
@@ -62,24 +67,50 @@ function OffcanvasExample() {
                     <NavDropdown.Item href="/men">All</NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
-                <Form className="d-flex">
-                  {/* <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  /> */}
-                  {/* <Button variant="outline-success">Search</Button> */}
-                  <input type="Search" placeholder="Search" />
-                </Form>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
-          <Navbar.Brand href="/sell">Sell</Navbar.Brand>
+
           {username ? ( // Check if username exists
-            <Navbar.Brand>{username}</Navbar.Brand>
+            <>
+              <Navbar.Brand href="/sell">Sell</Navbar.Brand>
+              <Navbar.Brand>
+                <div
+                  className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+                  onMouseEnter={() => setShowTooltip(true)}
+                  onMouseLeave={() => setShowTooltip(false)}
+                >
+                  <OverlayTrigger
+                    show={showTooltip}
+                    placement="bottom"
+                    overlay={
+                      <Tooltip id="username-tooltip">
+                        <div className="flex flex-col">
+                          <span className="font-semibold">{username}</span>
+                          <span>{useremail}</span>
+                          {/* <Button variant="primary" size="sm" href="/">
+                            Log Out
+                          </Button> */}
+                        </div>
+                      </Tooltip>
+                    }
+                  >
+                    <span
+                      className="font-medium text-gray-600 dark:text-gray-300"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="bottom"
+                    >
+                      {firstLetterUserName}
+                    </span>
+                  </OverlayTrigger>
+                </div>
+              </Navbar.Brand>
+            </>
           ) : (
-            <Navbar.Brand href="/login">Sign In</Navbar.Brand>
+            <>
+              <Navbar.Brand href="/login">Sell</Navbar.Brand>
+              <Navbar.Brand href="/login">Sign In</Navbar.Brand>
+            </>
           )}
         </Navbar>
       ))}

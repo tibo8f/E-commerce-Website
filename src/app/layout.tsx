@@ -10,9 +10,11 @@ import { createContext, useContext } from "react";
 
 export const UserContext = createContext<{
   username: string;
+  useremail: string; // Add email property
   setUsername: (newName: string) => void;
 }>({
   username: "",
+  useremail: "", // Initialize email as an empty string
   setUsername: () => null,
 });
 
@@ -38,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <UserContext.Provider value={{ username, setUsername }}>
+        <UserContext.Provider value={{ username, useremail, setUsername }}>
           {/* Layout UI */}
           <header>
             <NavBarHome />
