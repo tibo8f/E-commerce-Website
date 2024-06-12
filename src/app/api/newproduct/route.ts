@@ -96,5 +96,6 @@ export type Article = Awaited<ReturnType<typeof getArticles>>[number]
 
 export async function GET(request: Request) {
   const allArticles = await getArticles()
+  console.log("API was reached (API speaking)")
   return Response.json(allArticles)
 }

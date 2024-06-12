@@ -14,6 +14,7 @@ export default function Page() {
       method: "GET",
     });
     const data = await reponse.json();
+    console.log("API was reached (frontend speaking)");
     console.log(data);
     setJsonData(data);
   }
