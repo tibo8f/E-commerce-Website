@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Web version of my marketplace application built with React, Next.js, Node.js, and Prisma. Features user registration, item management, and a shared API and database, similar to Vinted.
 
 ## Getting Started
 
